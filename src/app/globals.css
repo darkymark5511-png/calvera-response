@@ -642,3 +642,159 @@ body {
     transition: none !important;
   }
 }
+
+/* Roster ------------------------------------------------------------- */
+
+.roster-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.roster-card {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0;
+}
+
+.roster-card:last-child {
+  border-bottom: 0;
+}
+
+.roster-button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-left: 2px solid transparent;
+  border-radius: 2px;
+  color: var(--text);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.roster-button.is-selected {
+  border-left-color: var(--accent);
+}
+
+.roster-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.roster-callsign {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.roster-name,
+.roster-role {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.roster-role {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.roster-stats {
+  padding: 6px 2px 0;
+}
+
+/* Armory ------------------------------------------------------------- */
+
+.armory-funds {
+  font-family: var(--font-mono);
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.catalog-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalog-item {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+}
+
+.catalog-item:first-child {
+  border-top: 0;
+}
+
+.catalog-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.catalog-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.catalog-price {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.catalog-meta,
+.catalog-note {
+  margin: 4px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.catalog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.catalog-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  padding: 3px 6px;
+}
+
+.link-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (max-width: 560px) and (orientation: portrait) {
+  .catalog-head {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .catalog-actions {
+    gap: 8px;
+  }
+}

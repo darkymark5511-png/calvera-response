@@ -47,6 +47,8 @@ export interface Operator {
   abilityDescriptionKey: string;
   stats: OperatorStats;
   voice: VoiceProfile;
+  /** Operators level through missions; the roster starts everyone at one. */
+  level: number;
   maxLevel: number;
 }
 
@@ -61,6 +63,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.reyesDesc",
     stats: { accuracy: 72, composure: 78, speed: 74, durability: 80 },
     voice: "clipped-baritone",
+    level: 1,
     maxLevel: 10,
   },
   {
@@ -73,6 +76,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.okaforDesc",
     stats: { accuracy: 75, composure: 80, speed: 82, durability: 76 },
     voice: "steady-bass",
+    level: 1,
     maxLevel: 10,
   },
   {
@@ -85,6 +89,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.stevenDesc",
     stats: { accuracy: 92, composure: 84, speed: 58, durability: 66 },
     voice: "measured-tenor",
+    level: 1,
     maxLevel: 10,
   },
   {
@@ -97,6 +102,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.whitfieldDesc",
     stats: { accuracy: 64, composure: 88, speed: 72, durability: 70 },
     voice: "cool-alto",
+    level: 1,
     maxLevel: 10,
   },
   {
@@ -109,6 +115,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.wiperDesc",
     stats: { accuracy: 70, composure: 76, speed: 70, durability: 68 },
     voice: "dry-baritone",
+    level: 1,
     maxLevel: 10,
   },
   {
@@ -121,6 +128,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.carvajalDesc",
     stats: { accuracy: 66, composure: 94, speed: 68, durability: 66 },
     voice: "warm-tenor",
+    level: 1,
     maxLevel: 10,
   },
   {
@@ -133,6 +141,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.elleryDesc",
     stats: { accuracy: 68, composure: 80, speed: 54, durability: 88 },
     voice: "bright-alto",
+    level: 1,
     maxLevel: 10,
   },
   {
@@ -145,6 +154,7 @@ export const ROSTER: readonly Operator[] = [
     abilityDescriptionKey: "roster.ability.coleDesc",
     stats: { accuracy: 74, composure: 72, speed: 90, durability: 62 },
     voice: "light-tenor",
+    level: 1,
     maxLevel: 10,
   },
 ] as const;

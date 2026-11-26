@@ -6,6 +6,7 @@
  */
 
 import { useSyncExternalStore } from "react";
+import { EMPTY_CAREER, parseCareer, serialiseCareer, type CareerState } from "@/game/hq/progress";
 
 export const PROGRESS_KEY = "cr_guest_progress";
 export const GUEST_FLAG_KEY = "cr_guest_mode";
@@ -121,4 +122,48 @@ export function useGuestMode(): boolean {
     () => cached(GUEST_FLAG_KEY, readRaw(GUEST_FLAG_KEY), parseGuestFlag),
     () => false,
   );
+}
+
+/* Career sync -------------------------------------------------------- */
+
+export const CAREER_KEY = "cr_career";
+
+/** Writes the career locally. Signed-in saves are pushed separately. */
+export function writeLocalCareer(state: CareerState): void {
+  writeStoredValue(CAREER_KEY, serialiseCareer(state));
+}
+
+const careerListeners = new Set<() => void>();
+
+function emitCareer(): void {
+  for (const listener of careerListeners) listener();
+}
+
+function subscribeCareer(listener: () => void): () => void {
+  careerListeners.add(listener);
+  window.addEventListener("storage", listener);
+  return () => {
+    careerListeners.delete(listener);
+    window.removeEventListener("storage", listener);
+  };
+}
+
+/**
+ * Career state with a separate listener set from the legacy progress keys, so
+ * writing a career does not re-render every guest-progress consumer.
+ */
+export function useCareer(): CareerState {
+  return useSyncExternalStore(
+    subscribeCareer,
+    () => cached(CAREER_KEY, readRaw(CAREER_KEY), parseCareer),
+    () => EMPTY_CAREER,
+  );
+}
+
+export function updateCareer(update: (current: CareerState) => CareerState): CareerState {
+  const current = cached(CAREER_KEY, readRaw(CAREER_KEY), parseCareer);
+  const next = update(current);
+  writeStoredValue(CAREER_KEY, serialiseCareer(next));
+  emitCareer();
+  return next;
 }
