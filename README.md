@@ -27,6 +27,11 @@ credentials are committed.** `.env*` is git-ignored except `.env.example` (empty
 Use the direct database host only if the IPv4 add-on is enabled, because Vercel
 functions need IPv4. The pooler hosts are IPv4 and need no add-on.
 
+Copy the pooler host from the Supabase **Connect** dialog rather than composing it.
+The `aws-N` prefix is a pooler cluster index, not a region name, and a project lives
+on exactly one of them — an `aws-0` host pointed at an `aws-1` project fails with
+`tenant or user not found`, which looks like a credentials problem but is not.
+
 Note on TLS: `pg` builds its config with `Object.assign({}, config, parse(url))`, so
 an `sslmode` parameter inside the connection string replaces the `ssl` option. The
 app therefore strips `sslmode`/`ssl*` parameters before handing the string to `pg`
