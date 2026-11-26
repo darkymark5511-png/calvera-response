@@ -134,6 +134,49 @@ Lead entries are written when a lethal shot is taken in a non-lethal operation, 
 a suspect who is surrendering, on a suspect already down, or on a suspect who was
 never positively identified. A teammate in the line of fire blocks the shot instead.
 
+## Phase 3: headquarters, career economy, armory and roster
+
+| Module | What it owns |
+| --- | --- |
+| `src/game/economy/funds.ts` | Starting funds, mission payouts by rank, lead penalty, purchase and resale maths |
+| `src/game/hq/progress.ts` | The career save: version, missions, funds, owned kit, loadout, best ranks, lead entries |
+| `src/game/equipment/catalog.ts` | 18 catalogue items across 10 slots, every one from a fictional manufacturer |
+| `src/game/equipment/loadout.ts` | Loadout validation, armor/helmet stacking, optic bonus, weight and mobility |
+| `src/shared/squad-selection.ts` | Squad of three: selection, injury rules, entry order |
+| `src/app/api/progress/route.ts` | `GET`/`PUT` the signed-in career; guests never call it |
+
+Screens: `/hq` (console), `/career` (payout table and dispatch), `/armory` (buy,
+equip, sell), `/roster` (squad room).
+
+### Economy
+
+| Rank | Payout |
+| --- | --- |
+| Flawless | 3200 CR |
+| Clean | 2600 CR |
+| Acceptable | 1800 CR |
+| Messy | 900 CR |
+
+Each lead entry costs 450 CR, capped at 80% of the base payout so a mission is
+never worth exactly nothing. Equipment is bought once and resold at half price;
+ammunition, throwables and medical kits are repurchased per mission. A new career
+starts with 2400 CR.
+
+### Manufacturers
+
+Every weapon, tool and piece of protection comes from a fictional manufacturer:
+Vantor, Harlan, Corvane, Ridgemont, Brennock, Halvard, Quarrel Works, Sallow
+Precision, Ironwood, Hollow Forge, Ironside, Marshal, Tamarack, Brennan Vale,
+Torque. `tests/equipment.test.ts` fails the build if a real brand or model name
+appears anywhere in `src`.
+
+### Career storage
+
+The career blob is the same shape whether it lives in `localStorage` under
+`cr_career` (guests) or in `game.progress.data` (signed-in accounts). Both paths
+parse through `parseCareer`, which returns the empty career rather than throwing
+on a corrupt save, and clamps negative or absurd values.
+
 ## Local development
 
 ```bash
