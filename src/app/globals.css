@@ -1,0 +1,130 @@
+:root {
+  --bg: #0b0d10;
+  --panel: #14181d;
+  --line: #232a32;
+  --text: #e6e9ee;
+  --muted: #8b96a3;
+  --accent: #c8a24a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 20px 96px;
+}
+
+h1 {
+  font-size: 28px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.sub {
+  color: var(--muted);
+  margin: 0 0 32px;
+  font-size: 14px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  background: #0e1216;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+button {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: #1b2229;
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.note {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+
+.error {
+  color: #e0655c;
+  font-size: 13px;
+  margin: 0 0 12px;
+}
+
+.ok {
+  color: #6fbf8b;
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
