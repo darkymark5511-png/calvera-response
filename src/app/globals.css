@@ -272,6 +272,105 @@ body {
   text-transform: uppercase;
 }
 
+/* Range -------------------------------------------------------------- */
+
+.meter {
+  margin-bottom: 14px;
+}
+
+.meter-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.meter-value {
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.meter-track {
+  height: 6px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+}
+
+.meter-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 120ms linear;
+}
+
+.range-threshold {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  margin: 8px 0 0;
+}
+
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.order-button {
+  min-height: 44px;
+  padding: 8px 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.order-button:hover,
+.order-button:focus-visible {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.feed-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feed-line {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.feed-line:last-child {
+  border-bottom: 0;
+}
+
+.feed-callsign {
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.feed-text {
+  color: var(--text);
+}
+
 /* Sub-pages ---------------------------------------------------------- */
 
 .page {
@@ -460,6 +559,10 @@ body {
 
 /* Mobile portrait: same stack, bottom third, taller buttons. */
 @media (max-width: 560px) and (orientation: portrait) {
+  .order-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .menu {
     padding: 16px 18px 24px;
   }
