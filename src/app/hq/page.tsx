@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import { useLanguage } from "@/lib/language";
 import { useSession } from "@/lib/session-context";
@@ -15,6 +16,14 @@ export default function Headquarters() {
       <p className="page-note">
         {user ? t.hq.signedInNotice : t.hq.guestNotice}
       </p>
+
+      <section className="panel">
+        <h2 className="panel-title">{t.range.heading}</h2>
+        <p className="page-note">{t.range.subtitle}</p>
+        <Link className="back-link" href="/range">
+          {t.range.entry}
+        </Link>
+      </section>
 
       <section className="panel">
         <h2 className="panel-title">{t.hq.progressHeading}</h2>

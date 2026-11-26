@@ -3,14 +3,26 @@ import { en } from "@/i18n/en";
 import { id } from "@/i18n/id";
 import { DEFAULT_LANG, isLang, STRINGS } from "@/i18n";
 
-function flatten(value: unknown, prefix = ""): string[] {
-  if (typeof value === "string") return [prefix];
+/**
+ * Returns the full key path as an array. Some keys contain dots themselves
+ * ("cmd.ack.none"), so the path cannot be flattened to a dotted string and
+ * split again to look the value up.
+ */
+function paths(value: unknown, prefix: readonly string[] = []): string[][] {
+  if (typeof value === "string") return [[...prefix]];
   if (value && typeof value === "object") {
     return Object.entries(value as Record<string, unknown>).flatMap(([key, child]) =>
-      flatten(child, prefix ? `${prefix}.${key}` : key),
+      paths(child, [...prefix, key]),
     );
   }
   return [];
+}
+
+function read(table: unknown, path: readonly string[]): unknown {
+  return path.reduce<unknown>(
+    (acc, part) => (acc as Record<string, unknown>)[part],
+    table,
+  );
 }
 
 describe("translation tables", () => {
@@ -20,21 +32,16 @@ describe("translation tables", () => {
   });
 
   it("en and id expose exactly the same keys", () => {
-    const enKeys = flatten(en).sort();
-    const idKeys = flatten(id).sort();
+    const enKeys = paths(en).map((path) => path.join(".")).sort();
+    const idKeys = paths(id).map((path) => path.join(".")).sort();
     expect(idKeys).toEqual(enKeys);
   });
 
   it("no string is empty", () => {
     for (const [lang, table] of Object.entries(STRINGS)) {
-      for (const key of flatten(table)) {
-        const value = key
-          .split(".")
-          .reduce<unknown>(
-            (acc, part) => (acc as Record<string, unknown>)[part],
-            table,
-          );
-        expect(String(value).trim(), `${lang}.${key}`).not.toBe("");
+      for (const path of paths(table)) {
+        const value = read(table, path);
+        expect(String(value).trim(), `${lang}.${path.join(".")}`).not.toBe("");
       }
     }
   });

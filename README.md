@@ -101,6 +101,39 @@ If `DATABASE_URL` is missing, API routes return `503` with code `DB_UNAVAILABLE`
 Nothing throws at import time, so the client keeps playing offline. Guests play
 offline; only signed-in accounts sync progress and scores to the server.
 
+## Phase 2: suspect AI, squad and rules of engagement
+
+Phase 2 is a pure simulation layer under `src/game`, plus one screen that drives it.
+
+| Module | What it owns |
+| --- | --- |
+| `src/shared/roster.ts` | The eight operators. Every callsign is a surname and is unique. The squad is three. |
+| `src/game/ai/awareness.ts` | 0..100 awareness meter with entry and exit thresholds, so states do not flicker. |
+| `src/game/perception/visibility.ts` | Sight cone, range, room light, smoke and walls. Night vision is observer-side only — the player's goggles never brighten the world for a suspect. |
+| `src/game/ai/suspect.ts` | Per-tick suspect brain: status effects, perception, awareness, mood, aim point. |
+| `src/game/ai/squad.ts` | Squad members bound to roster ids, light-beam radio reports, suppression, treatment time. |
+| `src/game/commands/radial.ts` | The eight orders, their radio acknowledgements, and who answers each one. |
+| `src/game/combat/roe.ts` | Rules-of-engagement verdicts: allowed, blocked, or a lead entry. |
+| `src/game/combat/penetration.ts` | Material and caliber penetration table with a per-layer resolver. |
+| `src/game/world/range.ts` | The training range: pure `stepRange` / `fire` / `issueRangeCommand` transitions. |
+
+The range lives at `/range` and is reachable from HQ. It is a debugging and
+demonstration surface: the awareness meter, the three-operator squad and its radio
+traffic, the eight radial orders, the rules-of-engagement lead counter, and a
+penetration readout are all visible and drivable without a rendering engine.
+
+Awareness rules:
+
+- A weapon light beam in the suspect's view raises awareness to at least 25 (suspicious).
+- A laser dot resting on the body adds 10 points per second.
+- Seeing the player adds awareness at a rate scaled by sight confidence.
+- With no stimulus, awareness decays 4 points per second.
+- Entry thresholds are 25 / 55 / 80; exit thresholds are 15 / 45 / 70.
+
+Lead entries are written when a lethal shot is taken in a non-lethal operation, on
+a suspect who is surrendering, on a suspect already down, or on a suspect who was
+never positively identified. A teammate in the line of fire blocks the shot instead.
+
 ## Local development
 
 ```bash

@@ -80,3 +80,23 @@ describe("menu stylesheet contract", () => {
     expect(css).not.toMatch(/border-radius:\s*50%/);
   });
 });
+
+describe("range stylesheet contract", () => {
+  it("orders are a two-column grid that collapses to one column on phones", () => {
+    expect(block(".order-grid {")).toMatch(/grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+    const portrait = css.slice(
+      css.indexOf("@media (max-width: 560px) and (orientation: portrait)"),
+      css.indexOf("@media (max-height: 480px) and (orientation: landscape)"),
+    );
+    expect(portrait).toMatch(/\.order-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/);
+  });
+
+  it("touch targets are at least 44px tall", () => {
+    expect(block(".order-button {")).toMatch(/min-height:\s*44px/);
+  });
+
+  it("the awareness meter is a 6px bar with no glow", () => {
+    expect(block(".meter-track {")).toMatch(/height:\s*6px/);
+    expect(css.toLowerCase()).not.toContain("drop-shadow");
+  });
+});
