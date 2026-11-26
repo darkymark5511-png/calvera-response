@@ -26,3 +26,6 @@ drizzle/*.local
 
 # typescript build info
 tsconfig.tsbuildinfo
+
+# local scratch database
+.pgdata/

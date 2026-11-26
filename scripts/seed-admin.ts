@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { eq } from "drizzle-orm";
 import * as schema from "../src/db/schema";
 import { hashPassword } from "../src/lib/auth";
+import { sslFor, stripSslParams } from "../src/db/ssl";
 
 const MIN_ADMIN_PASSWORD_LENGTH = 12;
 
@@ -42,9 +43,9 @@ async function main() {
   }
 
   const pool = new Pool({
-    connectionString,
+    connectionString: stripSslParams(connectionString),
     max: 1,
-    ssl: { rejectUnauthorized: true },
+    ssl: sslFor(connectionString),
   });
   const db = drizzle(pool, { schema });
 

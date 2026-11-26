@@ -1,6 +1,7 @@
 import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "./schema";
+import { sslFor, stripSslParams } from "./ssl";
 
 type Db = NodePgDatabase<typeof schema>;
 
@@ -17,10 +18,12 @@ export function getDb(): Db | null {
   if (!url) return null;
   if (!db) {
     // Pool max is 1 per serverless instance. SSL is required.
+    // sslmode/ssl* URL parameters are stripped so they cannot override `ssl`.
+    const ssl = sslFor(url);
     pool = new Pool({
-      connectionString: url,
+      connectionString: stripSslParams(url),
       max: 1,
-      ssl: { rejectUnauthorized: true },
+      ssl,
     });
     db = drizzle(pool, { schema });
   }

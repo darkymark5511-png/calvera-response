@@ -20,11 +20,21 @@ credentials are committed.** `.env*` is git-ignored except `.env.example` (empty
 | --- | --- |
 | `DATABASE_URL` | Supabase **transaction pooler**, port `6543`. Used by the running app on Vercel. |
 | `DATABASE_URL_MIGRATE` | Supabase **session pooler**, port `5432` on the pooler host. Used by `drizzle-kit` from a developer machine or CI. |
+| `DATABASE_CA_CERT` | Optional. Supabase root CA in PEM form. When set, the pool verifies the pooler's chain (`rejectUnauthorized: true`) instead of encrypting without verification. |
 | `ADMIN_USERNAME` | Admin account to create/update. Read only by `db:seed-admin`. |
 | `ADMIN_PASSWORD` | Admin password, minimum 12 characters. Read only by `db:seed-admin`. |
 
 Use the direct database host only if the IPv4 add-on is enabled, because Vercel
 functions need IPv4. The pooler hosts are IPv4 and need no add-on.
+
+Note on TLS: `pg` builds its config with `Object.assign({}, config, parse(url))`, so
+an `sslmode` parameter inside the connection string replaces the `ssl` option. The
+app therefore strips `sslmode`/`ssl*` parameters before handing the string to `pg`
+(`src/db/ssl.ts`). Supabase's pooler presents a chain rooted at the Supabase root CA,
+which is not in the Node trust store and whose intermediate is sometimes omitted, so
+verifying against the system store fails with `SELF_SIGNED_CERT_IN_CHAIN`. TLS is
+always on for a remote host; set `DATABASE_CA_CERT` to pin the root and get full
+verification. `sslmode=disable` is honoured only for a loopback host.
 
 ## Database
 
