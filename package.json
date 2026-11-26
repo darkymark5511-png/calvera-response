@@ -14,20 +14,28 @@
     "db:seed-admin": "tsx scripts/seed-admin.ts"
   },
   "dependencies": {
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "drizzle-orm": "0.45.4",
     "next": "16.4.6",
     "pg": "8.23.1",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "three": "^0.187.0"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.0.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.0",
     "@types/node": "^22.0.0",
     "@types/pg": "^8.15.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.187.0",
     "drizzle-kit": "0.31.11",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.4.6",
+    "jsdom": "^25.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0",
     "vitest": "^3.0.0"
