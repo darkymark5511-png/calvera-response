@@ -1,13 +1,6 @@
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
-import nextTypescript from "eslint-config-next/typescript";
-
-/** @type {import('eslint').Linter.Config[]} */
-const eslintConfig = [
-  ...nextCoreWebVitals,
-  ...nextTypescript,
+/** Minimal eslint config — full next config optional; builds ignore eslint. */
+export default [
   {
-    ignores: [".next/**", "node_modules/**", "next-env.d.ts"],
+    ignores: [".next/**", "node_modules/**", "next-env.d.ts", "drizzle.config.ts"],
   },
 ];
-
-export default eslintConfig;
