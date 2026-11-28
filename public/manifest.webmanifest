@@ -1,11 +1,9 @@
 {
   "name": "Calvera Response",
   "short_name": "Calvera",
-  "description": "Tactical police simulation — Calvera Bay TRU",
   "start_url": "/",
-  "display": "fullscreen",
-  "orientation": "landscape",
-  "background_color": "#0c0e10",
-  "theme_color": "#0c0e10",
-  "icons": []
+  "display": "standalone",
+  "background_color": "#0d1015",
+  "theme_color": "#0d1015",
+  "orientation": "landscape"
 }
