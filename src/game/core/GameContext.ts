@@ -1,5 +1,14 @@
-import type { QualityTier, ROE, Stance, FireMode, Lang } from "@/shared/types";
-import { QUALITY } from "@/shared/constants";
+export type QualityTier = "LOW" | "MEDIUM" | "HIGH";
+export type ROE = "LETHAL" | "NON_LETHAL" | "DYNAMIC";
+export type Stance = "stand" | "crouch" | "prone";
+export type FireMode = "semi" | "burst" | "auto";
+export type Lang = "en" | "id";
+
+export const QUALITY = {
+  LOW: { shadowMap: 1024, cascades: 0, pixelRatioCap: 1.0, post: "none" as const, dynamicLights: 1, renderDist: 45 },
+  MEDIUM: { shadowMap: 1536, cascades: 2, pixelRatioCap: 1.5, post: "smaa" as const, dynamicLights: 2, renderDist: 70 },
+  HIGH: { shadowMap: 2048, cascades: 3, pixelRatioCap: 2.0, post: "gtao_smaa" as const, dynamicLights: 3, renderDist: 110 },
+} as const;
 
 export interface HudSnapshot {
   stance: Stance;
@@ -9,18 +18,6 @@ export interface HudSnapshot {
   ammoRes: number;
   fireMode: FireMode;
   weaponName: string;
-  grenadeFlash: number;
-  grenadeStun: number;
-  grenadeGas: number;
-  grenadeSmoke: number;
-  battery: number;
-  squad: { callsign: string; hp: number; status: string }[];
-  commandState: string | null;
-  subtitle: { speaker: string; text: string; until: number }[];
-  prompt: string | null;
-  toast: string | null;
-  objectivesVisible: boolean;
-  minimapOpen: boolean;
   paused: boolean;
 }
 
@@ -92,18 +89,6 @@ export function createGameContext(): GameContext {
       ammoRes: 120,
       fireMode: "auto",
       weaponName: "Vantor KS-9",
-      grenadeFlash: 3,
-      grenadeStun: 0,
-      grenadeGas: 0,
-      grenadeSmoke: 0,
-      battery: 100,
-      squad: [],
-      commandState: null,
-      subtitle: [],
-      prompt: null,
-      toast: null,
-      objectivesVisible: false,
-      minimapOpen: false,
       paused: false,
     },
     settings: {

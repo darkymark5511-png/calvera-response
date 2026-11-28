@@ -1,5 +1,7 @@
 import type { GameContext } from "./GameContext";
-import { TICK_HZ, TICK_MS, HUD_PUSH_HZ } from "@/shared/constants";
+
+const TICK_HZ = 60;
+const HUD_PUSH_HZ = 10;
 
 export type SimUpdate = (ctx: GameContext, dt: number) => void;
 export type RenderFn = (ctx: GameContext, alpha: number) => void;
@@ -80,5 +82,3 @@ export class GameLoop {
     this.ctx.hud.paused = false;
   }
 }
-
-void TICK_MS;
