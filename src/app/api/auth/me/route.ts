@@ -1,17 +1,22 @@
 import { NextResponse } from "next/server";
-import { getDb } from "@/db";
-import { getSessionUser } from "@/lib/session";
-import { dbUnavailable } from "@/lib/http";
+import { getSessionUser } from "@/server/auth/session";
+import { dbAvailable } from "@/server/db";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
-  const db = getDb();
-  if (!db) return dbUnavailable();
+const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
 
-  const user = await getSessionUser(db);
-  if (!user) {
-    return NextResponse.json({ user: null }, { status: 200 });
+export async function GET() {
+  if (!dbAvailable()) {
+    return NextResponse.json({ error: "Database unavailable", code: "DB_UNAVAILABLE" }, { status: 503, headers });
   }
-  return NextResponse.json({ user });
+  try {
+    const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: "Not signed in", code: "UNAUTHORIZED" }, { status: 401, headers });
+    }
+    return NextResponse.json(user, { headers });
+  } catch {
+    return NextResponse.json({ error: "Database unavailable", code: "DB_UNAVAILABLE" }, { status: 503, headers });
+  }
 }
