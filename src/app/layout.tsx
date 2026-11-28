@@ -1,31 +1,38 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource/barlow-condensed/600.css";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
-import ClientShell from "@/components/ClientShell";
 
 export const metadata: Metadata = {
   title: "Calvera Response",
-  description: "Calvera Bay Tactical Response Unit",
+  description: "Tactical police simulation — Calvera Bay TRU",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Calvera Response",
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08090b",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: "#0c0e10",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body>
-        <ClientShell>{children}</ClientShell>
-      </body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
