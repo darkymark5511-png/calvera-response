@@ -16,7 +16,10 @@ export const dynamic = "force-dynamic";
 
 function clientIp(req: NextRequest): string {
   const forwarded = req.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
+  if (forwarded) {
+    const first = forwarded.split(",")[0]?.trim();
+    if (first) return first;
+  }
   return req.headers.get("x-real-ip") ?? "unknown";
 }
 
